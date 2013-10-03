@@ -31,6 +31,7 @@ public class EVente {
             System.out.format("%10s : %20s%n", "Email", client.getMail());
             System.out.format("%10s : %20s%n", "Actif", client.getActif());
             System.out.println("Listes des livres commandé :");
+            
             for (Commande com : client.getCommandeCollection()) {
                 System.out.format("%3s : %3s / %4s : %10s / %7s : %5s / %7s : %2s%n",
                         "Id", com.getId(),
@@ -38,6 +39,7 @@ public class EVente {
                         "Montant", com.getMontanttotal(),
                         "Traitée", com.getTraitee());
                 System.out.println("Livre(s) commandé(s) :");
+                
                 for (Lignecommande lig : com.getLignecommandeCollection()) {
                     System.out.format("%8s : %20s / %8s : %3s / %4s : %5s %n",
                             "Produit", lig.getProduit().getLibelle(),
@@ -49,20 +51,22 @@ public class EVente {
         
         System.out.println("====================================================");
         
+        em = emf.createEntityManager();
         String cat = args[1];
-        Categorie categ = new Categorie(Long.parseLong(cat));
+        Categorie categ = em.find(Categorie.class, Long.parseLong(cat));
+        
         if (categ == null) {
             System.out.println(cat + " est inconnu !");
         } else {
             System.out.println(categ.getLibelle());
-            /*for (Produit prod : categ.getProduitCollection()) {
+            for (Produit prod : categ.getProduitCollection()) {
                 System.out.format("%3s : %3s / %3s : %10s / %7s : %5s / %5s : %10s / %10s : %1s%n",
                         "Id", prod.getId(),
                         "Nom",prod.getLibelle(),
                         "Montant", prod.getPrix(),
-                        "Marque", prod.getMarque(),
+                        "Marque", prod.getMarque().getLibelle(),
                         "Disponible", prod.getDisponible());
-            }*/
+            }
         }
         
         

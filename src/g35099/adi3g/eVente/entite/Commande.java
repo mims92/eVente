@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package g35099.adi3g.eVente.entite;
 
 import java.io.Serializable;
@@ -25,7 +24,7 @@ import javax.persistence.TemporalType;
 
 /**
  *
- * @author Florian
+ * @author G35099
  */
 @Entity
 @Table(name = "COMMANDE")
@@ -140,5 +139,5 @@ public class Commande implements Serializable {
     public String toString() {
         return "g35099.adi3g.eVente.entite.Commande[ id=" + id + " ]";
     }
-
+    
 }

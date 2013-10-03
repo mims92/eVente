@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package g35099.adi3g.eVente.entite;
 
 import java.io.Serializable;
@@ -19,7 +18,7 @@ import javax.persistence.Table;
 
 /**
  *
- * @author Florian
+ * @author G35099
  */
 @Entity
 @Table(name = "CATEGORIE")
@@ -39,7 +38,7 @@ public class Categorie implements Serializable {
 
     public Categorie() {
     }
-    
+
     public Categorie(Long id) {
         this.id = id;
     }
@@ -97,5 +96,5 @@ public class Categorie implements Serializable {
     public String toString() {
         return "g35099.adi3g.eVente.entite.Categorie[ id=" + id + " ]";
     }
-
+    
 }

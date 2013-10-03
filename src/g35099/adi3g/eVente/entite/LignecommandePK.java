@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package g35099.adi3g.eVente.entite;
 
 import java.io.Serializable;
@@ -12,7 +11,7 @@ import javax.persistence.Embeddable;
 
 /**
  *
- * @author Florian
+ * @author G35099
  */
 @Embeddable
 public class LignecommandePK implements Serializable {
@@ -57,6 +56,7 @@ public class LignecommandePK implements Serializable {
 
     @Override
     public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof LignecommandePK)) {
             return false;
         }
@@ -74,5 +74,5 @@ public class LignecommandePK implements Serializable {
     public String toString() {
         return "g35099.adi3g.eVente.entite.LignecommandePK[ commande=" + commande + ", ligneno=" + ligneno + " ]";
     }
-
+    
 }
