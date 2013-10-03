@@ -4,6 +4,12 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>g35099.adi3g.eVente.entite.Joueur</class>
     <class>g35099.adi3g.eVente.entite.Partie</class>
+    <class>g35099.adi3g.eVente.entite.Produit</class>
+    <class>g35099.adi3g.eVente.entite.Marque</class>
+    <class>g35099.adi3g.eVente.entite.Client</class>
+    <class>g35099.adi3g.eVente.entite.Categorie</class>
+    <class>g35099.adi3g.eVente.entite.Lignecommande</class>
+    <class>g35099.adi3g.eVente.entite.Commande</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/eVenteDB"/>
       <property name="javax.persistence.jdbc.password" value="app"/>
