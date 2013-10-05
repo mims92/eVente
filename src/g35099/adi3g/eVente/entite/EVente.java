@@ -4,8 +4,10 @@
  */
 package g35099.adi3g.eVente.entite;
 
+import java.math.BigDecimal;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
 
 /**
  *
@@ -31,15 +33,15 @@ public class EVente {
             System.out.format("%10s : %20s%n", "Email", client.getMail());
             System.out.format("%10s : %20s%n", "Actif", client.getActif());
             System.out.println("Listes des livres commandé :");
-            
+
             for (Commande com : client.getCommandeCollection()) {
                 System.out.format("%3s : %3s / %4s : %10s / %7s : %5s / %7s : %2s%n",
                         "Id", com.getId(),
-                        "Date",com.getDat(),
+                        "Date", com.getDat(),
                         "Montant", com.getMontanttotal(),
                         "Traitée", com.getTraitee());
                 System.out.println("Livre(s) commandé(s) :");
-                
+
                 for (Lignecommande lig : com.getLignecommandeCollection()) {
                     System.out.format("%8s : %20s / %8s : %3s / %4s : %5s %n",
                             "Produit", lig.getProduit().getLibelle(),
@@ -48,13 +50,13 @@ public class EVente {
                 }
             }
         }
-        
+
         System.out.println("====================================================");
-        
+
         em = emf.createEntityManager();
         String cat = args[1];
         Categorie categ = em.find(Categorie.class, Long.parseLong(cat));
-        
+
         if (categ == null) {
             System.out.println(cat + " est inconnu !");
         } else {
@@ -62,14 +64,36 @@ public class EVente {
             for (Produit prod : categ.getProduitCollection()) {
                 System.out.format("%3s : %3s / %3s : %10s / %7s : %5s / %5s : %10s / %10s : %1s%n",
                         "Id", prod.getId(),
-                        "Nom",prod.getLibelle(),
+                        "Nom", prod.getLibelle(),
                         "Montant", prod.getPrix(),
                         "Marque", prod.getMarque().getLibelle(),
                         "Disponible", prod.getDisponible());
             }
         }
-        
-        
+
+        System.out.println("====================================================");
+        EntityTransaction transac = em.getTransaction();
+        transac.begin();
+
+        Client cli = new Client();
+        cli.setLogin("Mims");
+        cli.setNom("Desneux");
+        cli.setPrenom("Florian");
+        cli.setPassword("Flo");
+        cli.setMail("flo@flo.be");
+        System.out.println("Nouveau client : \n" + cli);
+
+        Produit prod = new Produit();
+        prod.setCategorie(em.find(Categorie.class, 1L));
+        prod.setMarque(em.find(Marque.class, 1L));
+        prod.setPrix(new BigDecimal(200));
+        prod.setLibelle("UltraBook");
+        System.out.println("Nouveau produit : \n" + prod);
+
+        em.persist(cli);
+        em.persist(prod);
+
+        transac.commit();
         em.close();
         emf.close();
     }

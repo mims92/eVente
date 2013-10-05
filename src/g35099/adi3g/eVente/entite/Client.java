@@ -10,11 +10,15 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import org.eclipse.persistence.annotations.ConversionValue;
+import org.eclipse.persistence.annotations.ObjectTypeConverter;
 
 /**
  *
@@ -24,11 +28,22 @@ import javax.persistence.Table;
 @Table(name = "CLIENT")
 @NamedQueries({
     @NamedQuery(name = "Client.findAll", query = "SELECT c FROM Client c")})
+@SequenceGenerator(name="seq", initialValue=1, allocationSize=100)
 public class Client implements Serializable {
+@ObjectTypeConverter(
+            name = "actifconverter",
+            dataType = java.lang.Boolean.class,
+            objectType = java.lang.Character.class,
+            conversionValues = {
+        @ConversionValue(dataValue = "true", objectValue = "1"),
+        @ConversionValue(dataValue = "false", objectValue = "0")
+    })
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @Column(name = "ID")
+    @GeneratedValue
     private Long id;
     @Basic(optional = false)
     @Column(name = "LOGIN")
@@ -45,6 +60,7 @@ public class Client implements Serializable {
     @Basic(optional = false)
     @Column(name = "PRENOM")
     private String prenom;
+    //@Convert("actifconverter") 
     @Basic(optional = false)
     @Column(name = "ACTIF")
     private char actif;
@@ -156,5 +172,4 @@ public class Client implements Serializable {
     public String toString() {
         return "g35099.adi3g.eVente.entite.Client[ id=" + id + " ]";
     }
-    
 }
