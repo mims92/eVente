@@ -81,6 +81,7 @@ public class EVente {
         cli.setPrenom("Florian");
         cli.setPassword("Flo");
         cli.setMail("flo@flo.be");
+        cli.setActif(true);
         System.out.println("Nouveau client : \n" + cli);
 
         Produit prod = new Produit();

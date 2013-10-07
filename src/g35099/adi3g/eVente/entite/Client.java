@@ -18,6 +18,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import org.eclipse.persistence.annotations.ConversionValue;
+import org.eclipse.persistence.annotations.Convert;
 import org.eclipse.persistence.annotations.ObjectTypeConverter;
 
 /**
@@ -30,15 +31,7 @@ import org.eclipse.persistence.annotations.ObjectTypeConverter;
     @NamedQuery(name = "Client.findAll", query = "SELECT c FROM Client c")})
 @SequenceGenerator(name="seq", initialValue=1, allocationSize=100)
 public class Client implements Serializable {
-@ObjectTypeConverter(
-            name = "actifconverter",
-            dataType = java.lang.Boolean.class,
-            objectType = java.lang.Character.class,
-            conversionValues = {
-        @ConversionValue(dataValue = "true", objectValue = "1"),
-        @ConversionValue(dataValue = "false", objectValue = "0")
-    })
-
+    
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -60,10 +53,18 @@ public class Client implements Serializable {
     @Basic(optional = false)
     @Column(name = "PRENOM")
     private String prenom;
-    //@Convert("actifconverter") 
+    @ObjectTypeConverter(
+            name = "actifconverter",
+            dataType = java.lang.String.class,
+            objectType = java.lang.Boolean.class,
+            conversionValues = {
+        @ConversionValue(dataValue = "1", objectValue = "true"),
+        @ConversionValue(dataValue = "0", objectValue = "false")
+    })
+    @Convert("actifconverter")
     @Basic(optional = false)
     @Column(name = "ACTIF")
-    private char actif;
+    private boolean actif;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
     private Collection<Commande> commandeCollection;
 
@@ -74,7 +75,7 @@ public class Client implements Serializable {
         this.id = id;
     }
 
-    public Client(Long id, String login, String password, String mail, String nom, String prenom, char actif) {
+    public Client(Long id, String login, String password, String mail, String nom, String prenom, boolean actif) {
         this.id = id;
         this.login = login;
         this.password = password;
@@ -132,11 +133,11 @@ public class Client implements Serializable {
         this.prenom = prenom;
     }
 
-    public char getActif() {
+    public boolean getActif() {
         return actif;
     }
 
-    public void setActif(char actif) {
+    public void setActif(boolean actif) {
         this.actif = actif;
     }
 
