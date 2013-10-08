@@ -30,12 +30,18 @@ import org.eclipse.persistence.annotations.ObjectTypeConverter;
 @Entity
 @Table(name = "CLIENT")
 @NamedQueries({
-    @NamedQuery(name = "Client.findAll", query = "SELECT c FROM Client c")})
+    @NamedQuery(name = "Client.findAll", query = "SELECT c FROM Client c"),
+    @NamedQuery(name = "Client.findAllasc", query = "SELECT c FROM Client c ORDER BY c.nom ASC"),
+    @NamedQuery(name = "Client.findDayCom", query = "SELECT c FROM Client c JOIN c.commandeCollection p WHERE p.dat = :date"),
+    @NamedQuery(name = "Client.findNotTreated", query = "SELECT c FROM Client c JOIN c.commandeCollection AS p WHERE p.montanttotal > :seuil AND p.traitee = '0'"),
+    @NamedQuery(name = "Client.findMax", query = "SELECT c FROM Client c JOIN c.commandeCollection HAVING COUNT(c.id) > (SELECT COUNT(c.id) FROM Client c GROUP BY c.id) GROUP BY c.id")
+})
 public class Client implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE, generator = "Client")
-    @TableGenerator(name="Client", allocationSize=1)
+    @TableGenerator(name = "Client", allocationSize = 1)
     @Basic(optional = false)
     @Column(name = "ID")
     private Long id;
@@ -57,13 +63,13 @@ public class Client implements Serializable {
     @Basic(optional = false)
     @Column(name = "ACTIF")
     @ObjectTypeConverter(
-     name="acPactConverter",
-     dataType=java.lang.String.class,
-     objectType=java.lang.Boolean.class,
-     conversionValues={
-         @ConversionValue(dataValue="1", objectValue="true"),
-         @ConversionValue(dataValue="0", objectValue="false")
-     })
+            name = "acPactConverter",
+            dataType = java.lang.String.class,
+            objectType = java.lang.Boolean.class,
+            conversionValues = {
+        @ConversionValue(dataValue = "1", objectValue = "true"),
+        @ConversionValue(dataValue = "0", objectValue = "false")
+    })
     @Convert("acPactConverter")
     private boolean actif;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
@@ -171,5 +177,4 @@ public class Client implements Serializable {
     public String toString() {
         return "g35099.adi3g.eVente.entite.Client[ id=" + id + " ]";
     }
-    
 }

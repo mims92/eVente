@@ -30,7 +30,8 @@ import javax.persistence.TableGenerator;
 @Entity
 @Table(name = "PRODUIT")
 @NamedQueries({
-    @NamedQuery(name = "Produit.findAll", query = "SELECT p FROM Produit p")})
+    @NamedQuery(name = "Produit.findAll", query = "SELECT p FROM Produit p")
+})
 public class Produit implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

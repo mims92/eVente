@@ -24,7 +24,9 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "LIGNECOMMANDE")
 @NamedQueries({
-    @NamedQuery(name = "Lignecommande.findAll", query = "SELECT l FROM Lignecommande l")})
+    @NamedQuery(name = "Lignecommande.findAll", query = "SELECT l FROM Lignecommande l"),
+    @NamedQuery(name ="Lignecommande.findProd", query = "SELECT l FROM Lignecommande l JOIN l.commande1 c JOIN c.lignecommandeCollection  ll WHERE c.traitee = '0'")
+})
 public class Lignecommande implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId

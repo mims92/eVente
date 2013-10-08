@@ -4,9 +4,11 @@
  */
 package g35099.adi3g.eVente.entite;
 
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -22,12 +24,12 @@ public class EVente {
                 javax.persistence.Persistence.createEntityManagerFactory("eVentePU");
         EntityManager em = emf.createEntityManager();
    
-            Client cli = new Client(0L, "flor", "flor", "flo@flor.be", "desn", "flon", true);
+           /* Client cli = new Client(0L, "flor", "flor", "flo@flor.be", "desn", "flon", true);
             
             EntityTransaction tx = em.getTransaction();
             tx.begin();
             em.persist(cli);
-            tx.commit();
+            tx.commit();*/
         
         String id = args[0];
         Client client = em.find(Client.class, Long.parseLong(id));
@@ -74,6 +76,48 @@ public class EVente {
             }
         }
 
+        System.out.println("====================================================");
+        Query q = em.createNamedQuery("Client.findAllasc");
+        List<Client> c = q.getResultList();
+        System.out.println("Affichage des clients par ordre : ");
+        for (Client clii : c) {
+            System.out.println(clii.getNom());
+        }
+        
+        System.out.println("====================================================");
+        q = em.createNamedQuery("Client.findDayCom");
+        q.setParameter("date", new java.util.Date(), TemporalType.DATE);
+        c = q.getResultList();
+        System.out.println("Affichage des clients qui ont des commandes aujourd'hui : ");
+        for (Client clii : c) {
+            System.out.println(clii.getNom());
+        }
+        
+        System.out.println("====================================================");
+        q = em.createNamedQuery("Client.findNotTreated");
+        q.setParameter("seuil", 10);
+        c = q.getResultList();
+        System.out.println("Affichage des clients qui dépasse un seuil et dont la commande est non traitée : ");
+        for (Client clii : c) {
+            System.out.println(clii.getNom());
+        }
+        
+        System.out.println("====================================================");
+        q = em.createNamedQuery("Lignecommande.findProd");
+        List<Lignecommande> p = q.getResultList();
+        System.out.println("Affichage des produits de commandes non traitées : ");
+        for (Lignecommande pp : p) {
+            System.out.println(pp.getProduit().getLibelle());
+        }
+        
+        System.out.println("====================================================");
+        q = em.createNamedQuery("Lignecommande.findMax");
+        c = q.getResultList();
+        System.out.println("Affichage des clients avec le plus de commandes : ");
+        for (Client pp : c) {
+            System.out.println(pp.getNom());
+        }
+        
         em.close();
         emf.close();
     }
