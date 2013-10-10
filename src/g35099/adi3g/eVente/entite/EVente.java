@@ -111,11 +111,11 @@ public class EVente {
         }
         
         System.out.println("====================================================");
-        q = em.createNamedQuery("Lignecommande.findMax");
-        c = q.getResultList();
+        q = em.createNamedQuery("Commande.findMax");
+        List<Produit> cc = q.getResultList();
         System.out.println("Affichage des clients avec le plus de commandes : ");
-        for (Client pp : c) {
-            System.out.println(pp.getNom());
+        for (Produit pp : cc) {
+            System.out.println(pp.getLibelle());
         }
         
         em.close();

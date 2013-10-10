@@ -33,8 +33,7 @@ import org.eclipse.persistence.annotations.ObjectTypeConverter;
     @NamedQuery(name = "Client.findAll", query = "SELECT c FROM Client c"),
     @NamedQuery(name = "Client.findAllasc", query = "SELECT c FROM Client c ORDER BY c.nom ASC"),
     @NamedQuery(name = "Client.findDayCom", query = "SELECT c FROM Client c JOIN c.commandeCollection p WHERE p.dat = :date"),
-    @NamedQuery(name = "Client.findNotTreated", query = "SELECT c FROM Client c JOIN c.commandeCollection AS p WHERE p.montanttotal > :seuil AND p.traitee = '0'"),
-    @NamedQuery(name = "Client.findMax", query = "SELECT c FROM Client c JOIN c.commandeCollection HAVING COUNT(c.id) > (SELECT COUNT(c.id) FROM Client c GROUP BY c.id) GROUP BY c.id")
+    @NamedQuery(name = "Client.findNotTreated", query = "SELECT c FROM Client c JOIN c.commandeCollection AS p WHERE p.montanttotal > :seuil AND p.traitee = '0'")
 })
 public class Client implements Serializable {
 
