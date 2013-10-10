@@ -30,8 +30,7 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "COMMANDE")
 @NamedQueries({
-    @NamedQuery(name = "Commande.findAll", query = "SELECT c FROM Commande c"),
-    @NamedQuery(name = "Commande.findMax", query = "SELECT lignecommande.produit FROM Commande commande JOIN commande.lignecommandeCollection ligneCommande WHERE commande.traitee = '0'")
+    @NamedQuery(name = "Commande.findAll", query = "SELECT c FROM Commande c")
 })
 public class Commande implements Serializable {
     private static final long serialVersionUID = 1L;
